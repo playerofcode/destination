@@ -2,6 +2,8 @@ import {useParams, useNavigate} from 'react-router-dom'
 import Breadcrumb from './Breadcrumb'
 import axios from 'axios';
 import {useState,useEffect} from 'react'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 const WeddingSingle = () => {
     const navigate = useNavigate();
     let {slug} = useParams();
@@ -25,11 +27,7 @@ const WeddingSingle = () => {
     <div className='container'>
     <div className="row py-4" style={{textAlign:"justify"}}>
     <button onClick={() => navigate(-1)} className="btn btn-sm" style={{width:'100px'}}><i className='fa fa-arrow-left'></i> &nbsp;Go back</button> 
-    {loading && (<div class="text-center">
-  <div class="spinner-border" role="status">
-    <span class="visually-hidden">Loading...</span>
-  </div>
-</div>)}
+    {loading && <Skeleton count={5}/>}
       {
         data.map((item)=>{
           return(

@@ -1,5 +1,7 @@
 import DestinationItem from './DestinationItem';
 import axios from 'axios';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 import {useState,useEffect} from 'react'
 const Destination = () =>{
 	const [data,setData]=useState([]);
@@ -26,11 +28,7 @@ const Destination = () =>{
 				</div>
 			</div>
 			<div className="row">
-			{loading && (<div class="text-center">
-  <div class="spinner-border" role="status">
-    <span class="visually-hidden">Loading...</span>
-  </div>
-</div>)}
+			{loading && <Skeleton count={5}/>}
 			{
 				data.map((item)=>{
 					return (<DestinationItem src={item.image} slug={item.slug} key={item.id}/>)
