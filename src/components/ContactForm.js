@@ -1,13 +1,15 @@
 import {useState} from 'react'
 import { ToastContainer, toast } from 'react-toastify';
+import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import './../index.css';
 const ContactForm = () => {
+
     const [data,setData]=useState({
         name:'',
         email:'',
-        mobno:'',
         subject:'',
+        mobno:'',
         message:''
     });
     const formHandler = (e)=>{
@@ -21,7 +23,7 @@ const ContactForm = () => {
          toast.error('Name should be atleast 4 characters');
         }else if(!RegExp( /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).test(email)){
          toast.error('Invalid email');
-        }else if(!RegExp( /^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$/).test(mobno)){
+        }else if(!RegExp(/^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$/).test(mobno)){
             toast.error('Invalid Mobile Number');
         }else if(subject.length < 4){
          toast.error('Subject should be atleast 4 characters');
@@ -29,19 +31,23 @@ const ContactForm = () => {
          toast.error('Message should be atleast 55 characters');
         }
         else{
-         toast.success('Form submitted successfully.');
-         setData({
-            name:'',
-            email:'',
-            mobno:'',
-            subject:'',
-            message:''
-        });
+            axios.post('https://eventplanet.in/api/auth/destination_wedding_enquiry', data)
+              .then((response) => {
+                console.log(response.data);
+              }).catch(error=>console.log(error));
+        //  toast.success('Form submitted successfully.');
+        //  setData({
+        //     name:'',
+        //     email:'',
+        //     mobno:'',
+        //     subject:'',
+        //     message:''
+        // });
         }
     }
   return (
     <>
-                <form className="contact_form">
+                <form className="contact_form" method='post'>
                     <div className='form-group'>
                         <input type="text" name="name" className='form-control' onChange={formHandler} value={data.name} placeholder='Enter Name'/>
                     </div>
